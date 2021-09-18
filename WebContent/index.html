@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="en">
+	<head>
+		<title>功能选择</title>
+		<meta charset="UTF-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+		<link rel="stylesheet" href="css/bootstrap.min.css" />
+		<link rel="stylesheet" href="css/bootstrap-responsive.min.css" />
+		<link rel="stylesheet" href="css/fullcalendar.css" />
+		<link rel="stylesheet" href="css/unicorn.main.css" />
+		<link rel="stylesheet" href="css/unicorn.grey.css" class="skin-color" />	
+	<meta http-equiv="Content-Type" content="text/html; charset=utf-8" /></head>
+	<body>
+		<div class="container-fluid">
+			<div class="row-fluid" >
+				<div class="span6">
+					<div class="widget-box" align="center">
+						<div class="widget-title">
+							<span class="icon">
+								<i class="icon-bookmark"></i>
+							</span>
+							<h5>功能选择界面</h5>
+						</div>
+						<div class="widget-content">
+								<h3>功能选择</h3>
+								<p>
+									<hr>
+									<button class="btn btn-warning btn-large" id="chaxunshijuan">插入订单</button><br>
+									<hr>						
+									<button class="btn btn-success btn-large" id="chakanshijuan">插入汇款</button><br>
+									<hr>
+									<button class="btn btn-inverse btn-large" id="chakanquekao">查看订单</button><br>
+									<hr>
+									<button class="btn btn-primary btn-large" id="denglu">查看汇款</button><br>
+									<hr>
+									<button class="btn btn-danger btn-large" id="denglu">查看欠款</button><br>
+								</p>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>			            
+		            <script src="js/jquery.min.js"></script>
+		            <script src="js/jquery.ui.custom.js"></script>
+		            <script src="js/bootstrap.min.js"></script>
+					<script type="text/javascript" charset="utf-8">
+						var chaxunshijuan=document.querySelector("#chaxunshijuan");
+						var chakanshijuan=document.querySelector("#chakanshijuan");
+						var denglu=document.querySelector("#denglu");
+						var chakanquekao=document.querySelector("#chakanquekao");
+						chakanquekao.onclick = function() {
+							window.location.href="QueKao.html";
+						}
+						chaxunshijuan.onclick = function() {
+							window.location.href="ChaXunShiJuan.html";
+						}
+						chakanshijuan.onclick = function() {
+							window.location.href="ShiJuan.html";
+						}
+						denglu.onclick = function() {
+							window.location.href="DengLu.html";
+						}
+					</script>
+			</body>
+		</html>
