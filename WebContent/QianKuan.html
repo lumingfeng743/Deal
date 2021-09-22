@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="en">
+ <head>
+        <meta charset="UTF-8" />
+        <title>欠款查看</title>
+         <link href="Content/bootstrap/css/bootstrap.min.css" rel="stylesheet" />
+         <link href="Content/bootstrap3-editable/css/bootstrap-editable.css" rel="stylesheet" />
+         <link href="Content/bootstrap-table/bootstrap-table.min.css"  rel="stylesheet" />
+    </head>
+    <body>
+        <h1 align="center">欠款查看</h1>
+		<script src="Content/jquery-1.9.1.min.js"></script>
+		<script src="Content/bootstrap/js/bootstrap.min.js"></script>
+		<script src="Content/bootstrap3-editable/js/bootstrap-editable.js"></script>
+		<script src="Content/bootstrap-table/bootstrap-table.min.js"></script>
+		<script src="Content/bootstrap-table/locale/bootstrap-table-zh-CN.min.js"></script>
+		<script src="Content/bootstrap-table/extensions/editable/bootstrap-table-editable.min.js"></script>         
+		<table id="mytab1" class="table table-hover"></table>		
+		<script type="text/javascript" charset="utf-8">
+		    $('#mytab1').bootstrapTable({
+		        url: 'QianKuan.Svlt',  //请求后台的url
+		        queryParams: "queryParams", //传递参数
+		        toolbar: "#toolbar",  //工具按钮用哪个容器
+		        sidePagination: "true", //分页方式
+		        striped: true, // 是否显示行间隔色
+		        search : "true", //搜索
+		        uniqueId: "Id",  //主键列
+		        pageSize: 10,  //每页的记录行数
+				pageList: [10,15,25],
+		        pagination: true, // 是否分页
+		        sortable: true, // 是否启用排序
+				clickToSelect: true,
+				showRefresh:true,
+		        columns: [
+					{
+						 field: "Id",
+	 					 title: '序号',
+	 					 sortable: true,
+	 					 align: "center",
+						 width: 40,
+	 					 clickToSelect: true, 
+	 					 singleSelect:true,
+						 formatter: function (value, row, index) {
+						 return index+1;
+	 					}	
+					},
+		            {
+		                field: '客户',
+		                title: '客户'
+		            },
+					{
+					    field: '欠款',
+					    title: '欠款'
+				    },
+		        ]
+		    });
+		</script>
+		
+</body>
+</html>

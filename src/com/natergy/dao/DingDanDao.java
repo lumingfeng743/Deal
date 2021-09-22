@@ -67,12 +67,20 @@ public class DingDanDao {
 		int num=0;
 		String xingming=huikuan.getXingMing();
 		double huikuan1=huikuan.getHuiKuan();
+		String huikuanriqi=huikuan.getHuiKuanRiQi();
+		HuiKuan huikuan2=huikuan;
+		num=GengXinDingDan(huikuan2);
+		String zhuangtai="未处理";
+		if(num==1){
+			zhuangtai="已处理";
+		}
+		num=0;
 		try{
 			C3P0Util.t_beginTransaction();//开启事务
 			con=C3P0Util.getConnection();
 			String sql = "INSERT INTO 客户汇款   "
-					+ "(客户,汇款) "
-					+ " values ('"+xingming+"','"+huikuan1+"')";
+					+ "(客户,汇款,汇款日期,状态) "
+					+ " values ('"+xingming+"','"+huikuan1+"','"+huikuanriqi+"','"+zhuangtai+"')";
 			pstmt = con.prepareStatement(sql);			
 			num = pstmt.executeUpdate();			
 			C3P0Util.t_commitTransaction();//提交事务		
@@ -86,8 +94,7 @@ public class DingDanDao {
 				e.printStackTrace();
 			}
 		}
-		HuiKuan huikuan2=huikuan;
-		num=GengXinDingDan(huikuan2);
+		
 		return num;
 	}
 	//为新客户插入欠款数据
@@ -148,11 +155,11 @@ public class DingDanDao {
 			C3P0Util.t_beginTransaction();//开启事务
 			con = C3P0Util.t_getConnection();
 			statement = con.createStatement();
-			String sql = "select * from `订单`";
+			String sql = "select `客户`,`下单日期`,`订货量`,`欠款`  from `订单` ";
 			resultSet = statement.executeQuery(sql);
-			int i=1;			
-			while(resultSet.next()){//循环读取
-				HashMap<String, Object> map = new HashMap<String, Object>();				
+			int i=1;		
+			while(resultSet.next()){//循环读取	
+				HashMap<String, Object> map = new HashMap<String, Object>();							
 				map.put("Id", i);
 				i++;
 				map.put("客户",resultSet.getString("客户"));//从数据库读取的客户信息写入map	
@@ -181,7 +188,7 @@ public class DingDanDao {
 			C3P0Util.t_beginTransaction();//开启事务
 			con = C3P0Util.t_getConnection();
 			statement = con.createStatement();
-			String sql = "select * from `欠款`";
+			String sql = "select `客户`,`欠款` from `客户欠款` ";
 			resultSet = statement.executeQuery(sql);
 			int i=1;			
 			while(resultSet.next()){//循环读取
@@ -189,7 +196,7 @@ public class DingDanDao {
 				map.put("Id", i);
 				i++;
 				map.put("客户",resultSet.getString("客户"));//从数据库读取的客户信息写入map	
-				map.put("欠款",resultSet.getString("欠款"));
+				map.put("欠款",resultSet.getDouble("欠款"));
 				list.add(map);
 			}	
 			C3P0Util.t_commitTransaction();//提交事务
@@ -214,7 +221,7 @@ public class DingDanDao {
 			C3P0Util.t_beginTransaction();//开启事务
 			con = C3P0Util.t_getConnection();
 			statement = con.createStatement();
-			String sql = "select * from `汇款`";
+			String sql = "select `客户`,`汇款`,`汇款日期`,`状态` from `客户汇款`";
 			resultSet = statement.executeQuery(sql);
 			int i=1;			
 			while(resultSet.next()){//循环读取
@@ -223,6 +230,8 @@ public class DingDanDao {
 				i++;
 				map.put("客户",resultSet.getString("客户"));//从数据库读取的客户信息写入map	
 				map.put("汇款",resultSet.getString("汇款"));
+				map.put("汇款日期",resultSet.getString("汇款日期"));
+				map.put("状态",resultSet.getString("状态"));
 				list.add(map);
 			}	
 			C3P0Util.t_commitTransaction();//提交事务
@@ -246,8 +255,7 @@ public class DingDanDao {
 			con = C3P0Util.t_getConnection();
 			statement = con.createStatement();
 			String sql = "select `欠款`,`id` from `订单` where `客户`='"+xingming+"' and `欠款`<> 0 ";
-			resultSet = statement.executeQuery(sql);
-			int i=1;			
+			resultSet = statement.executeQuery(sql);			
 			while(resultSet.next()){//循环读取
 				HashMap<String, Object> map = new HashMap<String, Object>();				
 				map.put("id",resultSet.getInt("id"));
@@ -355,17 +363,23 @@ public class DingDanDao {
 		num=GengXinQianKuan(xingming,qiankuan2-huikuan1);//更新总欠款表
 		while(huikuan1!=0){
 			Map<String, Object> map= list.get(i);
+			System.out.println(xingming);
 			double qiankuan=(double) map.get("欠款");
-			int id=(int)map.get("id");			
+			System.out.println(qiankuan);
+			int id=(int)map.get("id");
+			System.out.println(id);
 			if(huikuan1<=qiankuan){//还款金额小于第一笔欠款，更新第一条数据后跳出循环
-				num=GengXinDingDanQianKuan(xingming,id,qiankuan-huikuan1);			
+				num=GengXinDingDanQianKuan(xingming,id,qiankuan-huikuan1);	
+				System.out.println(i+"："+(qiankuan-huikuan1));
 				huikuan1=0;
 			}else{//还款金额大于第一笔欠款，欠款条目清零，继续循环更新
 				num=GengXinDingDanQianKuan(xingming,id,0);
 				i++;
 				huikuan1=huikuan1-qiankuan;
+				System.out.println(i+":"+huikuan1);
 			}
-		}		
+		}
+		
 		return num;		
 	}
 	

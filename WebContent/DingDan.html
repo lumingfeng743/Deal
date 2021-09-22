@@ -1,9 +1,148 @@
 <!DOCTYPE html>
-<html>
-	<head>
-		<meta charset="utf-8">
-		<title></title>
-	</head>
-	<body>
-	</body>
+<html lang="en">
+ <head>
+        <meta charset="UTF-8" />
+        <title>订单查看</title>
+         
+		 <link href="Content/bootstrap/css/bootstrap.min.css" rel="stylesheet" />
+		 <link href="Content/bootstrap3-editable/css/bootstrap-editable.css" rel="stylesheet" />
+		 <link href="Content/bootstrap-table/bootstrap-table.min.css"  rel="stylesheet" />
+    </head>
+    <body>
+        <h1 align="center">订单查看</h1>
+		<!--必须的js文件-->
+		<script src="Content/jquery-1.9.1.min.js"></script>
+		<script src="Content/bootstrap/js/bootstrap.min.js"></script>
+		<script src="Content/bootstrap3-editable/js/bootstrap-editable.js"></script>
+		<script src="Content/bootstrap-table/bootstrap-table.min.js"></script>
+		<script src="Content/bootstrap-table/locale/bootstrap-table-zh-CN.min.js"></script>
+		<script src="Content/bootstrap-table/extensions/editable/bootstrap-table-editable.min.js"></script>
+	    <div id="toolbar" class="btn-group">
+	         <button id="btn_add" type="button" class="btn btn-success">
+	             <span class="glyphicon glyphicon-plus" aria-hidden="true"></span>新增
+	         </button>
+	    </div>
+		<table id="mytab1" class="table table-hover"></table>	
+		<table id="tb_add"></table>
+		<!--新增或者编辑的弹出框-->
+		<div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+		    <div class="modal-dialog" role="document">
+		        <div class="modal-content">
+		            <div class="modal-header">
+		                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+		                <h4 class="modal-title" id="myModalLabel">订单</h4>
+		            </div>
+		            <div class="modal-body">
+		                <div class="row" style="padding:10px;">
+		                    <label class="control-label col-xs-2">客户</label>
+		                    <div class="col-xs-10">
+		                        <input type="text" id="kehu" name="kehu" class="form-control" placeholder="客户">
+		                    </div>
+		                </div>
+		                <div class="row" style="padding:10px;">
+		                    <label class="control-label col-xs-2">下单日期</label>
+		                    <div class="col-xs-10">
+		                        <input type="date" id="xiadanriqi" name="xiadanriqi" class="form-control" placeholder="下单日期">
+		                    </div>
+		                </div>
+		                <div class="row" style="padding:10px;">
+		                    <label class="control-label col-xs-2">要货量</label>
+		                    <div class="col-xs-10">
+		                        <input type="number" id="yaohuoliang" name="yaohuoliang" class="form-control" placeholder="要货量">
+		                    </div>
+		                </div>
+		            </div>
+		            <div class="modal-footer">
+		                <button type="button" class="btn btn-default" data-dismiss="modal"><span class="glyphicon glyphicon-remove" aria-hidden="true"></span>关闭</button>
+		                <button type="button" id="baocun" class="btn btn-primary"><span class="glyphicon glyphicon-floppy-disk" aria-hidden="true"></span>保存</button>
+		            </div>		            
+		        </div>
+		    </div>
+		</div>
+		<script type="text/javascript" charset="utf-8">
+		    $('#mytab1').bootstrapTable({
+		        url: 'DingDan.Svlt',  //请求后台的url
+		        queryParams: "queryParams", //传递参数
+		        toolbar: "#toolbar",  //工具按钮用哪个容器
+		        sidePagination: "true", //分页方式
+		        striped: true, // 是否显示行间隔色
+		        search : "true", //搜索
+		        uniqueId: "Id",  //主键列
+		        pageSize: 10,  //每页的记录行数
+				pageList: [10,15,25],
+		        pagination: true, // 是否分页
+		        sortable: true, // 是否启用排序
+				clickToSelect: true,
+				showRefresh:true,
+		        columns: [
+					{
+						 field: "Id",
+	 					 title: '序号',
+	 					 sortable: true,
+	 					 align: "center",
+						 width: 40,
+	 					 clickToSelect: true, 
+	 					 singleSelect:true,
+						 formatter: function (value, row, index) {
+						 return index+1;
+	 					}	
+					},
+		            {
+		                field: '客户',
+		                title: '客户'
+		            },
+					{
+					    field: '下单日期',
+					    title: '下单日期'
+					},
+					{
+					    field: '订货量',
+					    title: '订货量'
+					},
+					{
+					    field: '欠款',
+					    title: '欠款'
+				    },
+		        ]
+		    });
+			$("#btn_add").on('click', function () {
+			$('#tb_add').bootstrapTable("resetView");
+			                    //弹出模态框
+			                    $("#myModal").modal();
+			                    //给弹出框里面的各个文本框赋值
+			                    $("#myModal input").val("");
+			                    $("#myModal textarea").val("");
+			   
+				
+				$("#baocun").on('click', function () { 
+					kehu = document.querySelector("#kehu").value;
+					xiadanriqi = document.querySelector("#xiadanriqi").value;
+					yaohuoliang = document.querySelector("#yaohuoliang").value;
+					if(kehu.trim() == '') { alert("请输入客户名(；′⌒`)!"); return; }
+					if(xiadanriqi.trim() == '') { alert("请输入日期(；´д｀)ゞ!"); return; }
+					if(yaohuoliang.trim() == '') { alert("请输入要货量(；´д｀)ゞ!"); return; }
+				$.ajax({
+						url: "XinZengDingDan.svlt",//要连接的地址
+						type: "POST",//请求方式
+						data: {//请求数据
+							"kehu": kehu,
+							"xiadanriqi": xiadanriqi,
+							"yaohuoliang": yaohuoliang
+						},
+						success: function(data) {//请求成功要执行的函数
+							if (data == '1') { 
+								alert("提交成功o(^▽^)o");//后端返回值为1，说明用户名密码正确
+								document.getElementById("kehu").value='';
+								document.getElementById("xiadanriqi").value='';
+								document.getElementById("yaohuoliang").value='';
+							} else {
+								alert("提交失败，请重试(╥╯^╰╥)");//后端返回值为0，用户名或密码错误
+							}
+						}
+					});
+			});
+});
+		</script>
+
+</body>
 </html>
