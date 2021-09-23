@@ -15,6 +15,11 @@
 		<script src="Content/bootstrap-table/bootstrap-table.min.js"></script>
 		<script src="Content/bootstrap-table/locale/bootstrap-table-zh-CN.min.js"></script>
 		<script src="Content/bootstrap-table/extensions/editable/bootstrap-table-editable.min.js"></script>         
+		<div id="toolbar" class="btn-group">
+			 <button id="btn_back" type="button" class="btn btn-primary" onclick="true">
+			     <span class="glyphicon glyphicon-log-out" aria-hidden="true"></span>返回
+			 </button>
+		</div>
 		<table id="mytab1" class="table table-hover"></table>		
 		<script type="text/javascript" charset="utf-8">
 		    $('#mytab1').bootstrapTable({
@@ -29,9 +34,16 @@
 				pageList: [10,15,25],
 		        pagination: true, // 是否分页
 		        sortable: true, // 是否启用排序
+				showToggle: true,                    //是否显示详细视图和列表视图的切换按钮
+				cardView: false,                    //是否显示详细视图
 				clickToSelect: true,
+				minimumCountColumns: 2,             //最少允许的列数
 				showRefresh:true,
+				selectItemName: 'parentItem',
 		        columns: [
+					{
+					    checkbox: true
+					},
 					{
 						 field: "Id",
 	 					 title: '序号',
@@ -54,6 +66,10 @@
 				    },
 		        ]
 		    });
+			var back=document.querySelector("#btn_back");
+			back.onclick=function(){
+					window.location.href="index.html";
+			}
 		</script>
 		
 </body>

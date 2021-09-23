@@ -10,17 +10,13 @@
     </head>
     <body>
         <h1 align="center">订单查看</h1>
-		<!--必须的js文件-->
-		<script src="Content/jquery-1.9.1.min.js"></script>
-		<script src="Content/bootstrap/js/bootstrap.min.js"></script>
-		<script src="Content/bootstrap3-editable/js/bootstrap-editable.js"></script>
-		<script src="Content/bootstrap-table/bootstrap-table.min.js"></script>
-		<script src="Content/bootstrap-table/locale/bootstrap-table-zh-CN.min.js"></script>
-		<script src="Content/bootstrap-table/extensions/editable/bootstrap-table-editable.min.js"></script>
 	    <div id="toolbar" class="btn-group">
 	         <button id="btn_add" type="button" class="btn btn-success">
 	             <span class="glyphicon glyphicon-plus" aria-hidden="true"></span>新增
 	         </button>
+			 <button id="btn_back" type="button" class="btn btn-primary" onclick="true">
+			     <span class="glyphicon glyphicon-log-out" aria-hidden="true"></span>返回
+			 </button>
 	    </div>
 		<table id="mytab1" class="table table-hover"></table>	
 		<table id="tb_add"></table>
@@ -59,6 +55,13 @@
 		        </div>
 		    </div>
 		</div>
+		<!--必须的js文件-->
+		<script src="Content/jquery-1.9.1.min.js"></script>
+		<script src="Content/bootstrap/js/bootstrap.min.js"></script>
+		<script src="Content/bootstrap3-editable/js/bootstrap-editable.js"></script>
+		<script src="Content/bootstrap-table/bootstrap-table.min.js"></script>
+		<script src="Content/bootstrap-table/locale/bootstrap-table-zh-CN.min.js"></script>
+		<script src="Content/bootstrap-table/extensions/editable/bootstrap-table-editable.min.js"></script>
 		<script type="text/javascript" charset="utf-8">
 		    $('#mytab1').bootstrapTable({
 		        url: 'DingDan.Svlt',  //请求后台的url
@@ -105,6 +108,11 @@
 				    },
 		        ]
 		    });
+			var back=document.querySelector("#btn_back");
+			back.onclick=function(){
+					window.location.href="index.html";
+			}
+			
 			$("#btn_add").on('click', function () {
 			$('#tb_add').bootstrapTable("resetView");
 			                    //弹出模态框
@@ -143,6 +151,5 @@
 			});
 });
 		</script>
-
 </body>
 </html>

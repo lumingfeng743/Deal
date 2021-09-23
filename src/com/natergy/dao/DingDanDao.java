@@ -25,12 +25,23 @@ public class DingDanDao {
 	ResultSetMetaData metaData =null;
 	//插入新订单数据
 	public int ZengJiaDingDan(DingDan dingdan){
-		int num=0;	
-		
+		int num=0;			
 		String xingming=dingdan.getXingMing();
 		String riqi=dingdan.getRiQi();
 		double dinghuoliang=dingdan.getDingHuoLiang();
 		double qiankuan=dingdan.getQianKuan();
+		if(ExistsKeHu(xingming)==true){//老客户
+				double qiankuan2=getQianKuan(xingming);
+				if(qiankuan2<0){
+					qiankuan=qiankuan+qiankuan2;
+				}
+				num=GengXinQianKuan(xingming,qiankuan2+qiankuan);
+			}else{//新客户
+				QianKuan qian=new QianKuan();
+				qian.setXingMing(xingming);
+				qian.setQianKuan(qiankuan);
+				num=ZengJiaQianKuan(qian);
+			}
 		
 		try {
 			C3P0Util.t_beginTransaction();//开启事务
@@ -51,15 +62,7 @@ public class DingDanDao {
 				e.printStackTrace();
 			}
 		}
-		if(num==1&&ExistsKeHu(xingming)==true){//老客户
-				double qiankuan2=getQianKuan(xingming);
-				num=GengXinQianKuan(xingming,qiankuan2+qiankuan);
-			}else{//新客户
-				QianKuan qian=new QianKuan();
-				qian.setXingMing(xingming);
-				qian.setQianKuan(qiankuan);
-				num=ZengJiaQianKuan(qian);
-			}
+		
 		return num;
 	}
 	//插入新汇款数据
@@ -362,7 +365,11 @@ public class DingDanDao {
 		double qiankuan2=getQianKuan(xingming);
 		num=GengXinQianKuan(xingming,qiankuan2-huikuan1);//更新总欠款表
 		while(huikuan1!=0){
+			if(i==list.size()){
+				break;
+			}
 			Map<String, Object> map= list.get(i);
+			
 			System.out.println(xingming);
 			double qiankuan=(double) map.get("欠款");
 			System.out.println(qiankuan);

@@ -4,8 +4,9 @@
 		<title>功能选择</title>
 		<meta charset="UTF-8" />
         <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-		<link rel="stylesheet" href="css/bootstrap.min.css" />
-		<link rel="stylesheet" href="css/bootstrap-responsive.min.css" />
+		<link href="Content/bootstrap/css/bootstrap.min.css" rel="stylesheet" />
+		<link href="Content/bootstrap3-editable/css/bootstrap-editable.css" rel="stylesheet" />
+		<link href="Content/bootstrap-table/bootstrap-table.min.css"  rel="stylesheet" />
 		<link rel="stylesheet" href="css/fullcalendar.css" />
 		<link rel="stylesheet" href="css/unicorn.main.css" />
 		<link rel="stylesheet" href="css/unicorn.grey.css" class="skin-color" />	
@@ -25,45 +26,40 @@
 								<h3>功能选择</h3>
 								<p>
 									<hr>
-									<button class="btn btn-warning btn-large" id="chaxundingdan">插入订单</button><br>
-									<hr>						
-									<button class="btn btn-success btn-large" id="charuhuikuan">插入汇款</button><br>
+									<button class="btn btn-warning btn-large" id="chaxundingdan">*查看/增加订单*</button><br>
 									<hr>
-									<button class="btn btn-inverse btn-large" id="chaxundingdan">查看订单</button><br>
+									<button class="btn btn-primary btn-large" id="chakanhuikuan">*查看/增加汇款*</button><br>
 									<hr>
-									<button class="btn btn-primary btn-large" id="chakanhuikuan">查看汇款</button><br>
-									<hr>
-									<button class="btn btn-danger btn-large" id="chakanqiankuan">查看欠款</button><br>
-								</p>
+									<button class="btn btn-danger btn-large" id="chakanqiankuan">***查看欠款***</button><br>							
 						</div>
 					</div>
 				</div>
 			</div>
 		</div>			            
-		            <script src="js/jquery.min.js"></script>
-		            <script src="js/jquery.ui.custom.js"></script>
-		            <script src="js/bootstrap.min.js"></script>
-					<script type="text/javascript" charset="utf-8">
-						var charudingdan=document.querySelector("#charudingdan");
-						var charuhuikuan=document.querySelector("#charuhuikuan");
-						var chaxundingdan=document.querySelector("#chaxundingdan");
-						var chakanhuikuan=document.querySelector("#chakanhuikuan");
-						var chakanqiankuan=document.querySelector("#chakanqiankuan");
-						charudingdan.onclick = function() {
-							window.location.href="#";
-						}
-						charuhuikuan.onclick = function() {
-							window.location.href="#";
-						}
-						chaxundingdan.onclick = function() {
-							window.location.href="DingDan.html";
-						}
-						chakanhuikuan.onclick = function() {
-							window.location.href="HuiKuan.html";
-						}
-						chakanqiankuan.onclick = function() {
-							window.location.href="QianKuan.html";
-						}
+		           
+		            <script type="text/javascript" charset="utf-8">
+							var charudingdan=document.querySelector("#charudingdan");
+							var charuhuikuan=document.querySelector("#charuhuikuan");
+							var chaxundingdan=document.querySelector("#chaxundingdan");
+							var chakanhuikuan=document.querySelector("#chakanhuikuan");
+							var chakanqiankuan=document.querySelector("#chakanqiankuan");
+							
+							chaxundingdan.onclick = function() {
+								window.location.href="DingDan.html";
+							}
+							chakanhuikuan.onclick = function() {
+								window.location.href="HuiKuan.html";
+							}
+							chakanqiankuan.onclick = function() {
+								window.location.href="QianKuan.html";
+							}
 					</script>
+					<script src="Content/jquery-1.9.1.min.js"></script>	
+					<script src="Content/bootstrap/js/bootstrap.min.js"></script>
+					<script src="Content/bootstrap3-editable/js/bootstrap-editable.js"></script>
+					<script src="Content/bootstrap-table/bootstrap-table.min.js"></script>
+					<script src="Content/bootstrap-table/locale/bootstrap-table-zh-CN.min.js"></script>
+					<script src="Content/bootstrap-table/extensions/editable/bootstrap-table-editable.min.js"></script>
+				
 			</body>
 		</html>

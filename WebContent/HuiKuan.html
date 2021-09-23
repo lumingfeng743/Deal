@@ -20,6 +20,9 @@
 		     <button id="btn_add" type="button" class="btn btn-success">
 		         <span class="glyphicon glyphicon-plus" aria-hidden="true"></span>新增
 		     </button>
+			 <button id="btn_back" type="button" class="btn btn-primary" onclick="true">
+			     <span class="glyphicon glyphicon-log-out" aria-hidden="true"></span>返回
+			 </button>
 		</div>
 		<table id="mytab1" class="table table-hover"></table>	
 		<table id="tb_add"></table>
@@ -100,7 +103,10 @@
 					},
 		        ]
 		    });
-			
+			var back=document.querySelector("#btn_back");
+			back.onclick=function(){
+					window.location.href="index.html";
+			}
 			$("#btn_add").on('click', function () {
 						$('#tb_add').bootstrapTable("resetView");
 						                    //弹出模态框
